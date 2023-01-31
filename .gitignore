@@ -2,7 +2,7 @@
 **/core
 **/debug_record
 **/submit_record
-**/log/*
-**/test_case/*
+**/log
+**/test_case
 *.swp
 **/html
