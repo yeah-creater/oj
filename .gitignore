@@ -1,3 +1,8 @@
 **/__pycache__
+**/core
+**/debug_record
+**/judge_record
+**/log
+**/test_case
 *.swp
 **/html
