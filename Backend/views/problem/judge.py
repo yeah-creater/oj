@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 from Backend.models.judge_record.judge_record import SubmitRecord
 from Backend.models.judge_record.judge_record import DebugRecord
 
@@ -22,7 +22,7 @@ class JudgeView(APIView):
             submit_record = SubmitRecord.objects.create(code = data.get('problem_content_code'))
             submit_record_id = submit_record.id
             other={
-                'record_id':submit_record_id,               
+                'record_id':submit_record_id, 
             }
             back = send_judge(json.dumps(data),json.dumps(other))
             submit_record = SubmitRecord.objects.filter(id = submit_record_id)
@@ -33,7 +33,7 @@ class JudgeView(APIView):
             other={
                 'record_id':debug_record_id,
             }
-        back = send_judge(json.dumps(data),json.dumps(other))
+            back = send_judge(json.dumps(data),json.dumps(other))
         return Response({
             'result':'success',
             'data':back,

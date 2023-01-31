@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from Backend.models.problem.problem import Problem
 from Backend.models.problem.serializers import ProblemSerializer
+from Backend.models.problem.serializers import ProblemListSerializer
 from rest_framework.pagination import PageNumberPagination
 import math
 class ListView(APIView):
@@ -13,7 +14,7 @@ class ListView(APIView):
             problems = Problem.objects.all()
             pg = PageNumberPagination()
             res=pg.paginate_queryset(problems,request)
-            serializer = ProblemSerializer(res,many=True)
+            serializer = ProblemListSerializer(res,many=True)
             return Response({
                 'result':'success',
                 'total':(int)(math.ceil(len(problems)/pg.page_size)),

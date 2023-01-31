@@ -6,7 +6,7 @@ def judge(task,path):
                     max_real_time=2000,
                     max_memory=64 * 1024 * 1024,
                     max_process_number=200,
-                    max_output_size=10000,
+                    max_output_size=100*1024,
                     max_stack=32 * 1024 * 1024,
                     # five args above can be _judger.UNLIMITED
                     exe_path=path['exe_path'],

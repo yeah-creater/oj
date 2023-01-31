@@ -91,7 +91,52 @@ class JudgeMachine():
             back['status'] = "Runtime Error"
         return json.dumps(back)
     def deal_submit_code(self,task):
-        return 'xxx'
+        path = '../submit_record/'+str(task.record_id)+'/'
+        os.makedirs(path)
+        code = task.problem_content_code
+        back={}
+        back['status']='Accepted'
+        # # 将代码输出到main.cpp 
+        if code != None:
+            f = open(path+'main.cpp','w')
+            f.write(code)
+            f.close()
+        if os.system("g++ "+path+"main.cpp"+" -o "+path+"main"):
+            result = subprocess.getoutput("g++ "+path+"main.cpp"+" -o "+path+"main")
+            back['status'] = 'Compile Error'
+            return json.dumps(back)
+        input_path='../test_case/' + str(task.problem_content_id) + '/in/'
+        answer_path='../test_case/' + str(task.problem_content_id) + '/out/'
+        # 测试代码
+        # 获取 测试数据的数量
+        sz = len(os.listdir(input_path))
+        for i in range(1,sz + 1):
+            value = judge(task, {
+            'exe_path':path + 'main',
+            'input_path':input_path + str(i) + '.in',
+            'output_path':path + str(i) + '.out',
+            'error_path':path + 'error.out',
+            }).get('result')
+            if value == 0: 
+                user_f = open(path + str(i) + '.out','r')
+                answer_f = open(answer_path + str(i) + '.out','r')
+                user_output = user_f.read().rstrip()
+                answer_output = answer_f.read().rstrip()
+                user_f.close()
+                answer_f.close()
+                if user_output != answer_output:
+                    back['status'] = 'Wrong Answer'
+                    return json.dumps(back)
+            elif value == 1 or value == 2:
+                back['status'] = "Time Limit Exceeded"
+                return json.dumps(back)
+            elif value == 3:
+                back['status'] = "Memory Limit Exceeded"
+                return json.dumps(back)
+            elif value == 4:
+                back['status'] = "Runtime Error"
+                return json.dumps(back)
+        return json.dumps(back)
 machine = JudgeMachine()
 class JudgeHandler:
    def judge_code(self, info, other):
