@@ -57,8 +57,8 @@ class JudgeMachine():
             f = open(path+'1.in','w')
             f.write(task.debug_code_input)
             f.close()
-        if os.system("g++ "+path+"main.cpp"+" -o "+path+"main"):
-            result = subprocess.getoutput("g++ "+path+"main.cpp"+" -o "+path+"main")
+        if os.system("g++ "+path+"main.cpp"+" -O2 -Wall -lm --static -DONLINE_JUDGE -o "+path+"main"):
+            result = subprocess.getoutput("g++ "+path+"main.cpp"+" -O2 -Wall -lm --static -DONLINE_JUDGE -o "+path+"main")
             back['status'] = 'Compile Error'
             back['result'] = result 
             return json.dumps(back)
@@ -75,9 +75,13 @@ class JudgeMachine():
             'input_path':path+'1.in',
             'output_path':path+'1.out',
             'error_path':path+'1.out',
-        }).get('result')
-        back['status']='Finished'
-        back['result']=''
+        })
+        print(value)
+        back['real_time'] = value.get('real_time')
+        value = value.get('result')
+        back['status'] = 'Finished'
+       
+        back['result'] = ''
         if value == 0: 
             f = open(path+'1.out','r')
             result = f.read()
@@ -101,8 +105,8 @@ class JudgeMachine():
             f = open(path+'main.cpp','w')
             f.write(code)
             f.close()
-        if os.system("g++ "+path+"main.cpp"+" -o "+path+"main"):
-            result = subprocess.getoutput("g++ "+path+"main.cpp"+" -o "+path+"main")
+        if os.system("g++ "+path+"main.cpp"+" -o2 -o "+path+"main"):
+            result = subprocess.getoutput("g++ "+path+"main.cpp"+" -o2 -o "+path+"main")
             back['status'] = 'Compile Error'
             return json.dumps(back)
         input_path='../test_case/' + str(task.problem_content_id) + '/in/'

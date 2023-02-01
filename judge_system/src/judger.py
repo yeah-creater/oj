@@ -3,10 +3,10 @@ import os
 
 def judge(task,path):
     ret = _judger.run(max_cpu_time=1000,
-                    max_real_time=2000,
+                    max_real_time=1000,
                     max_memory=64 * 1024 * 1024,
                     max_process_number=200,
-                    max_output_size=100*1024,
+                    max_output_size=128*1024,
                     max_stack=32 * 1024 * 1024,
                     # five args above can be _judger.UNLIMITED
                     exe_path=path['exe_path'],
