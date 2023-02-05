@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated,AllowAny
 from django.conf import settings
 import os
 class UploadTestCaseView(APIView):
-    permission_classes = ([AllowAny])
+    permission_classes = ([IsAuthenticated])
 
     def post(self, request):
         # try:

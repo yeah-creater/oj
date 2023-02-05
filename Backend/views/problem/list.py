@@ -11,13 +11,13 @@ class ListView(APIView):
 
     def get(self, request):
         try:
-            problems = Problem.objects.all()
+            problems = Problem.objects.filter(show = True)
             pg = PageNumberPagination()
             res=pg.paginate_queryset(problems,request)
             serializer = ProblemListSerializer(res,many=True)
             return Response({
                 'result':'success',
-                'total':(int)(math.ceil(len(problems)/pg.page_size)),
+                'total':(int)(math.ceil(len(problems)/pg.page_size)*10),
                 'data':serializer.data,
             })
         except:

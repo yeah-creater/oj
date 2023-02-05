@@ -18,10 +18,15 @@ class JudgeView(APIView):
 
     def post(self, request):
         try:
-            data=request.POST
+            data = request.POST
             back = ''
             if data.get('code_judge_type') == 'submit':
-                submit_record = SubmitRecord.objects.create(code = data.get('problem_content_code'))
+                submit_record = SubmitRecord.objects.create(
+                    user_id = request.user.id,
+                    problem_id = data.get('problem_content_id'),
+                    code = data.get('problem_content_code'),
+                    language = data.get('problem_content_language'),
+                    )
                 submit_record_id = submit_record.id
                 problem = Problem.objects.filter(id = data.get('problem_content_id'))
                 if not problem.exists():    return ''

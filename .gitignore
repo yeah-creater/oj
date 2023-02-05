@@ -1,6 +1,7 @@
 **/__pycache__
 **/core
 **/media
+**/static
 **/debug_record
 **/submit_record
 **/log

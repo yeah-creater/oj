@@ -153,7 +153,8 @@ STATICFILES_DIRS = (
 )
 STATIC_URL = '/static/'
 TEST_CASE_PATH = os.path.join(BASE_DIR,'judge_system/test_case/') 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -168,7 +169,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS':  'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 5  # 每页数量
+    'PAGE_SIZE': 10  # 每页数量
 }
 
 
