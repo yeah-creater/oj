@@ -25,7 +25,7 @@ class ProfileView(APIView):
             destination.close()
         save(path + name + '.jpg')
         user_info = UserInfo.objects.filter(user_id = user_id)
-        photo = 'http://106.15.183.53:8000/media/profile/' + name +'.jpg'
+        photo = 'https://app2105.acapp.acwing.com.cn/media/profile/' + name +'.jpg'
         user_info.update(photo = photo)
         return Response({
             'result': "success",

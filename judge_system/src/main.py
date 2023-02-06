@@ -120,7 +120,9 @@ class JudgeMachine():
             'input_path':input_path + str(i) + '.in',
             'output_path':path + str(i) + '.out',
             'error_path':path + 'error.out',
-            }).get('result')
+            })
+            print(value)
+            value = value.get('result')
             if value == 0: 
                 user_f = open(path + str(i) + '.out','r')
                 answer_f = open(answer_path + str(i) + '.out','r')

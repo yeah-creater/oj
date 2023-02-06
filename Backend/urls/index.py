@@ -8,4 +8,5 @@ urlpatterns = [
    path("problem/",include("Backend.urls.problem.index")),
    path("submit_record/",include("Backend.urls.submit_record.index")),
    path("user/",include("Backend.urls.user.index")),
+   path("solution/",include("Backend.urls.solution.index")),
 ]

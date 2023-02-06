@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from Backend.models.user.user import UserInfo
 from Backend.models.user.serializers import UserInfoSerializer
-
+import datetime
 class GetInfoView(APIView):
     permission_classes = ([IsAuthenticated])
 
@@ -21,6 +21,18 @@ class GetInfoView(APIView):
             return Response({
                 'result':'success',
                 'data':serializer.data,
+            })
+        except:
+            return Response({
+                'result': "输入参数错误"
+            })
+    def post(self, request):
+        try:
+            data = request.POST
+            user_infos = UserInfo.objects.filter(user_id = request.user.id)
+            user_infos.update(name = data['name'], gender = data['gender'])
+            return Response({
+                'result': "success"
             })
         except:
             return Response({

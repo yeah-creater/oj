@@ -26,13 +26,13 @@ SECRET_KEY = 'django-insecure-%@(ve8&cc^$mvx7xks8%!dr_0&#utzt@x2_qg61&7thhbespsu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['106.15.183.53']
+ALLOWED_HOSTS = ['106.15.183.53','app2105.acapp.acwing.com.cn']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'corsheaders',
+    # 'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
     'django.contrib.admin',
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,8 +55,62 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_CREDENTIALS = True
+
+# CORS_ORIGIN_ALLOW_ALL = True
+
+# CORS_ORIGIN_WHITELIST = (
+
+# '*',
+
+# )
+
+# CORS_ALLOW_METHODS = (
+
+# 'DELETE',
+
+# 'GET',
+
+# 'OPTIONS',
+
+# 'PATCH',
+
+# 'POST',
+
+# 'PUT',
+
+# 'VIEW',
+
+# )
+
+# CORS_ALL_HEADERS = (
+
+# 'XMLHttpRequest',
+
+# 'X_FILENAME',
+
+# 'accept-encoding',
+
+# 'authorization',
+
+# 'content-type',
+
+# 'dnt',
+
+# 'origin',
+
+# 'user-agent',
+
+# 'x-csrftoken',
+
+# 'x-requested-with',
+
+# 'Pragma',
+
+# )
+
+
+
 ROOT_URLCONF = 'oj.urls'
 
 TEMPLATES = [
@@ -148,13 +202,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'static'),
-)
+# STATICFILES_DIRS = (
+#   os.path.join(BASE_DIR, 'static'),
+# )
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
+
 TEST_CASE_PATH = os.path.join(BASE_DIR,'judge_system/test_case/') 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -205,6 +265,8 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+
 
 
 

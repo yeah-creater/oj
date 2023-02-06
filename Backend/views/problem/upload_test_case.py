@@ -20,6 +20,10 @@ class UploadTestCaseView(APIView):
                 path = settings.TEST_CASE_PATH + str(problem_id) + '/out/'
                 if not os.path.exists(path):
                     os.makedirs(path)
+            else:
+                return Response({
+                'result': "success"
+            })
             # 表示以二进制写方式打开,只能写文件, 如果文件不存在,创建该文件;如果文件已存在,则覆盖写
             destination = open(path + file.name, 'wb+')    
             for chunk in file.chunks():      # 分块写入文件
