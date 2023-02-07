@@ -1,9 +1,9 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from Backend.models.solution.solution import Solution
+from Backend.models.blog.blog import Blog
 
-from Backend.models.solution.serializers import SolutionListSerializer
+from Backend.models.blog.serializers import BlogListSerializer
 from rest_framework.pagination import PageNumberPagination
 from Backend.models.user.user import UserInfo
 import math
@@ -12,27 +12,25 @@ class ListView(APIView):
 
     def get(self, request):
         # try:
-        solutions = Solution.objects.filter(show = True)
+        blogs = Blog.objects.filter(show = True)
         if request.GET.get('user_id') != None:
-            solutions = solutions.filter(user_id = int(request.GET.get('user_id')))
-        if request.GET.get('problem_id') != None:
-            solutions = solutions.filter(problem__id = int(request.GET.get('problem_id')))
-        if solutions.count() == 0:
+            blogs = blogs.filter(user_id = int(request.GET.get('user_id')))
+        if blogs.count() == 0:
             return Response({
             'result':'success',
             'total':0,
             'data':[],
         })
         pg = PageNumberPagination()
-        res = pg.paginate_queryset(solutions, request)
-        data = SolutionListSerializer(res, many=True).data
+        res = pg.paginate_queryset(blogs, request)
+        data = BlogListSerializer(res, many=True).data
         for i in range(0, len(data)):
             user_info = UserInfo.objects.get(user_id = data[i]['user_id'])
             data[i]['user_info_name'] = user_info.name
             data[i]['user_info_photo'] = user_info.photo
         return Response({
             'result':'success',
-            'total':(int)(math.ceil(len(solutions)/pg.page_size)*10),
+            'total':(int)(math.ceil(len(blogs)/pg.page_size)*10),
             'data':data
         })
         # except:

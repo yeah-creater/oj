@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from Backend.models.solution.solution import Solution
-from Backend.models.solution.serializers import SolutionContentSerializer
+from Backend.models.blog.blog import Blog
+from Backend.models.blog.serializers import BlogContentSerializer
 from Backend.models.user.user import UserInfo
 from Backend.utils.md_to_html import md_to_html
 from Backend.models.file.file import File
@@ -12,15 +12,16 @@ class ContentView(APIView):
 
     def get(self, request):
         # try:
-        solution_id = request.GET.get('solution_id')
-        if not Solution.objects.filter(id = solution_id,show = True).exists():
+        blog_id = request.GET.get('blog_id')
+        print(blog_id)
+        if not Blog.objects.filter(id = blog_id,show = True).exists():
             return Response({
             'result':'fail',
             })
-        solution = Solution.objects.get(id = solution_id,show = True)
-        data = SolutionContentSerializer(solution).data
+        blog = Blog.objects.get(id = blog_id,show = True)
+        data = BlogContentSerializer(blog).data
         user_info = UserInfo.objects.get(user_id = data['user_id'])
-        content = solution.file.content
+        content = blog.file.content
         data['user_info_name'] = user_info.name
         data['user_info_photo'] = user_info.photo
         data['content'] = content

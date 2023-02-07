@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from Backend.models.solution.solution import Solution
+from Backend.models.blog.blog import Blog
 from Backend.models.problem.problem import Problem
 from Backend.models.user.user import UserInfo
 from Backend.models.file.file import File
@@ -13,21 +13,18 @@ class OperationView(APIView):
         # try:
         data = request.POST
         user_id = request.user.id
-        print(user_id)
-        if data.get('problem_id').strip() == '' or data.get('title').strip() == '':
+        if data.get('tags').strip() == '' or data.get('title').strip() == '':
             return Response({
-                'result': "请输入问题编号和标题",
+                'result': "请输入标签和标题",
             })
-        problem_id = int(data.get('problem_id',""))
+        tags = data.get('tags')
         title = data.get('title','').strip()
         content = data.get('content','')
         file = File.objects.create(content = content)
-        problems = Problem.objects.filter(id = problem_id,show = True)
-        if problems.exists():
-            Solution.objects.create(file = file,user_id = user_id,title = title,problem = problems[0])
-            return Response({
-                'result': "success",
-            })
+        Blog.objects.create(file = file,user_id = user_id,title = title,tags=tags)
+        return Response({
+            'result': "success",
+        })
         # except:
         #     return Response({
         #         'result': "fail",
@@ -36,14 +33,14 @@ class OperationView(APIView):
     def delete(self, request):
         data = request.POST
         user_id = request.user.id
-        solution_id = data.get('solution_id')
-        solution = Solution.objects.get(id = solution_id)
-        if solution.user_id != user_id:
+        blog_id = data.get('blog_id')
+        blog = Blog.objects.get(id = blog_id)
+        if blog.user_id != user_id:
             return Response({
             'result': "fail",
             })
-        solution.show = False
-        solution.save()
+        blog.show = False
+        blog.save()
         return Response({
             'result': "success",
             })
@@ -51,22 +48,22 @@ class OperationView(APIView):
          # try:
         data = request.POST
         user_id = request.user.id
-        solution_id = int(data.get('solution_id',""))
+        blog_id = int(data.get('blog_id',""))
         title = data.get('title','').strip()
         content = data.get('content','')
-        if not Solution.objects.filter(id = solution_id,show = True).exists():
+        if not Blog.objects.filter(id = blog_id,show = True).exists():
             return Response({
                 'result': "fail",
             })
-        solution = Solution.objects.get(id = solution_id)
-        if solution.user_id != user_id:
+        blog = Blog.objects.get(id = blog_id)
+        if blog.user_id != user_id:
             return Response({
                 'result': "fail",
             })
-        solution.title = title
-        solution.file.content = content
-        solution.save()
-        solution.file.save()
+        blog.title = title
+        blog.file.content = content
+        blog.save()
+        blog.file.save()
         return Response({
                 'result': "success",
             })
