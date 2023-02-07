@@ -13,10 +13,9 @@ class RegisterView(APIView):
         username = data.get("username", "").strip()
         password = data.get("password", "").strip()
         password_confirm = data.get("password_confirm", "").strip()
-        uuid = request.META.get('HTTP_USER_AGENT',"unknown")+request.META.get('REMOTE_HOST')
+        uuid = data.get('uuid',"unknown")
         code = data.get('code',"").strip()
         valid_code = cache.get(uuid,'66666')
-
         if not username or not password or not code:
             return Response({
                 'result': "用户名和密码不能为空"

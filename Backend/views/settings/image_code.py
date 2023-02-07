@@ -6,18 +6,25 @@ from Backend.utils.image_code import check_code
 from io import BytesIO
 from django.shortcuts import HttpResponse
 from django.core.cache import cache
+import base64
+from Backend.utils.encryption import rndName
 class ImageCodeView(APIView):
     permission_classes = ([AllowAny])
 
     def get(self, request):
-        try:
-            img, code_string = check_code()
-            uuid=request.META.get('HTTP_USER_AGENT',"unknown")+request.META.get('REMOTE_HOST')
-            cache.set(uuid,code_string,100)
-            stream = BytesIO()
-            img.save(stream, 'png')
-            return HttpResponse(stream.getvalue(),content_type='images/jpg')
-        except:
-            return Response({
-                'result': "输入参数错误"
-            })
+        # try:
+        img, code_string = check_code()
+        uuid = rndName(8)
+        cache.set(uuid,code_string,60)
+        stream = BytesIO()
+        img.save(stream, 'png')
+        img = base64.b64encode(stream.getvalue())
+        return Response({
+            'result':'success',
+            'img':img,
+            'uuid':uuid,
+        })
+        # except:
+        #     return Response({
+        #         'result': "输入参数错误"
+        #     })
