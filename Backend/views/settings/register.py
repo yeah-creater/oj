@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.contrib.auth.models import User
 from Backend.models.user.user import UserInfo
+from Backend.utils.located import located
 from django.core.cache import cache
 class RegisterView(APIView):
     permission_classes = ([AllowAny])
@@ -43,7 +44,8 @@ class RegisterView(APIView):
             user = User(username=username)
             user.set_password(password)
             user.save()
-            UserInfo.objects.create(user = user,name = 'Trainee'+str(user.id))
+            ip = request.META.get('REMOTE_ADDR')
+            UserInfo.objects.create(user = user,name = 'Trainee'+str(user.id), address = located(ip))
             return Response({
                 'result': "success"
             })

@@ -18,9 +18,9 @@ class ContentView(APIView):
             'result':'fail',
             })
         solution = Solution.objects.get(id = solution_id,show = True)
+        content = solution.file.content
         data = SolutionContentSerializer(solution).data
         user_info = UserInfo.objects.get(user_id = data['user_id'])
-        content = solution.file.content
         data['user_info_name'] = user_info.name
         data['user_info_photo'] = user_info.photo
         data['content'] = content

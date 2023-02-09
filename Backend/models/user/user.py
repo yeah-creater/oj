@@ -9,6 +9,8 @@ class UserInfo(models.Model):
     name = models.CharField(max_length=64,default='Trainee')
     gender = models.CharField(choices = GENDER_CHOICES,default='male',max_length=16)
     birthday = models.DateField(default = now)
+    level = models.IntegerField(default = 1)
+    address = models.CharField(max_length = 1024,default = '中国')
     photo = models.URLField(max_length=256,blank=True,default="https://app2105.acapp.acwing.com.cn/media/profile/default.jpg")
     followings = models.IntegerField(default=0)
     followers = models.IntegerField(default=0)
