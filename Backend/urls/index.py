@@ -10,4 +10,5 @@ urlpatterns = [
    path("user/",include("Backend.urls.user.index")),
    path("solution/",include("Backend.urls.solution.index")),
    path("blog/",include("Backend.urls.blog.index")),
+   path("file/",include("Backend.urls.file.index")),
 ]

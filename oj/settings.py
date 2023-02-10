@@ -46,7 +46,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # 'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,60 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'oj.middleware.InterceptorMiddleware',
 ]
-# CORS_ALLOW_CREDENTIALS = True
-
-# CORS_ORIGIN_ALLOW_ALL = True
-
-# CORS_ORIGIN_WHITELIST = (
-
-# '*',
-
-# )
-
-# CORS_ALLOW_METHODS = (
-
-# 'DELETE',
-
-# 'GET',
-
-# 'OPTIONS',
-
-# 'PATCH',
-
-# 'POST',
-
-# 'PUT',
-
-# 'VIEW',
-
-# )
-
-# CORS_ALL_HEADERS = (
-
-# 'XMLHttpRequest',
-
-# 'X_FILENAME',
-
-# 'accept-encoding',
-
-# 'authorization',
-
-# 'content-type',
-
-# 'dnt',
-
-# 'origin',
-
-# 'user-agent',
-
-# 'x-csrftoken',
-
-# 'x-requested-with',
-
-# 'Pragma',
-
-# )
 
 
 
@@ -267,6 +214,10 @@ SIMPLE_JWT = {
 }
 
 
-
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = '1615498405@qq.com'
+EMAIL_HOST_PASSWORD = 'bgrkhhqggcwydfge'
 

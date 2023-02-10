@@ -13,16 +13,17 @@ class FileLike(models.Model):
     def __str__(self):
         return str(self.source) + ' - ' + str(self.target)
 
+# 字段名称不得已与前端接口一致
 class Comment(models.Model):
     file = models.ForeignKey(File,related_name='file_comments',on_delete=models.CASCADE,null = True)
-    user_id = models.IntegerField(default = 0)
-    parent_id = models.IntegerField(default = 0)
+    uid = models.IntegerField(default = 0)
+    parentId = models.IntegerField(default = 0)
     content = models.TextField(max_length=8*1024*1024, blank=True, default='')
     likes = models.IntegerField(default = 0)
-    address = models.CharField(max_length = 1024,default = '来自中国')
-    create_time = models.DateTimeField(default = now)
+    address = models.CharField(max_length = 1024,default = '中国')
+    createTime = models.DateTimeField(default = now)
     class Meta:
-        ordering = ['-create_time']
+        ordering = ['-createTime']
     
 # 2->3 表示 2用户点赞 3评论
 class CommentLike(models.Model):

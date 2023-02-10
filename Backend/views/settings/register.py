@@ -14,9 +14,8 @@ class RegisterView(APIView):
             username = data.get("username", "").strip()
             password = data.get("password", "").strip()
             password_confirm = data.get("password_confirm", "").strip()
-            uuid = data.get('uuid',"unknown")
             code = data.get('code',"").strip()
-            valid_code = cache.get(uuid,'66666')
+            valid_code = cache.get(username,'66666')
             if not username or not password or not code:
                 return Response({
                     'result': "用户名和密码不能为空"
@@ -24,10 +23,6 @@ class RegisterView(APIView):
             if code.lower() != valid_code.lower():
                 return Response({
                     'result': "验证码错误或已过期"
-                })
-            if not username.isnumeric() or len(username)!=11:
-                return Response({
-                    'result': "用户名必须为11位数字"
                 })
             if len(password)<8:
                 return Response({
@@ -46,8 +41,11 @@ class RegisterView(APIView):
             user.save()
             ip = request.META.get('REMOTE_ADDR')
             UserInfo.objects.create(user = user,name = 'Trainee'+str(user.id), address = located(ip))
+            cache.set('access','true',30)
             return Response({
-                'result': "success"
+                'uuid':'access',
+                'code':'true',
+                'result': "success",
             })
         except:
             return Response({
