@@ -25,7 +25,7 @@ class CommentView(APIView):
                 'result': "fail",
                 })
         elif (request.GET.get('type') == 'blog'):
-            blog_id = find('blog',request.GET.get('blog_id'))
+            file_id = find('blog',request.GET.get('blog_id'))
             if file_id == 0:
                 return Response({
                 'result': "fail",

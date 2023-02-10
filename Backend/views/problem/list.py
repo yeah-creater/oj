@@ -13,7 +13,7 @@ class ListView(APIView):
         try:
             problems = Problem.objects.filter(show = True)
             pg = PageNumberPagination()
-            res=pg.paginate_queryset(problems,request)
+            res = pg.paginate_queryset(problems,request)
             serializer = ProblemListSerializer(res,many=True)
             return Response({
                 'result':'success',

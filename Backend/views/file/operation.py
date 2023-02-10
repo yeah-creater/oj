@@ -21,18 +21,8 @@ class OperationView(APIView):
                 return Response({
                 'result': "fail",
                 })
-            data = request.POST
-            parentId = int(data.get('parentId'))
-            content = data.get('content')
-            file = File.objects.get(id = file_id)
-            address = UserInfo.objects.get(user_id = user_id).address
-            comment = Comment.objects.create(file = file,uid = user_id,address = address,parentId = parentId,content = content)
-            return Response({
-                'result': "success",
-                'data':comment.id
-                })
         elif request.POST.get('type') == 'blog':
-            blog_id = find('blog',request.POST.get('blog_id'))
+            file_id = find('blog',request.POST.get('blog_id'))
             if file_id == 0:
                 return Response({
                 'result': "fail",
@@ -40,6 +30,16 @@ class OperationView(APIView):
         else:
             return Response({
                 'result':'输入参数错误',
+            })
+        data = request.POST
+        parentId = int(data.get('parentId'))
+        content = data.get('content')
+        file = File.objects.get(id = file_id)
+        address = UserInfo.objects.get(user_id = user_id).address
+        comment = Comment.objects.create(file = file,uid = user_id,address = address,parentId = parentId,content = content)
+        return Response({
+            'result': "success",
+            'data':comment.id
             })
     def delete(self, request):
         user_id = request.user.id
