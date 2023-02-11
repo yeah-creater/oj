@@ -6,6 +6,7 @@ from Backend.models.user.user import UserInfo
 from Backend.models.user.user import Follow
 from Backend.models.solution.solution import Solution
 from Backend.models.blog.blog import Blog
+from Backend.models.video.video import Video
 
 from Backend.models.file.file import File
 from Backend.models.file.file import FileLike
@@ -21,6 +22,7 @@ admin.site.register(Follow)
 
 admin.site.register(Solution)
 admin.site.register(Blog)
+admin.site.register(Video)
 
 
 admin.site.register(File)

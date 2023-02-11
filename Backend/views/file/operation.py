@@ -27,6 +27,12 @@ class OperationView(APIView):
                 return Response({
                 'result': "fail",
                 })
+        elif request.POST.get('type') == 'video':
+            file_id = find('video',request.POST.get('video_id'))
+            if file_id == 0:
+                return Response({
+                'result': "fail",
+                })
         else:
             return Response({
                 'result':'输入参数错误',

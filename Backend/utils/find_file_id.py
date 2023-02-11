@@ -1,6 +1,7 @@
 from Backend.models.solution.solution import Solution
 from Backend.models.blog.blog import Blog
 from Backend.models.file.file import File
+from Backend.models.video.video import Video
 from Backend.models.file.file import Comment
 # 类型 以及 id
 def find(t, id):
@@ -16,6 +17,11 @@ def find(t, id):
             if not blogs.exists():
                return 0
             return blogs[0].file.id
+        elif t == 'video':
+            videos = Video.objects.filter(id = id, show = True)
+            if not videos.exists():
+               return 0
+            return videos[0].file.id
         else:
             return 0
     except:
