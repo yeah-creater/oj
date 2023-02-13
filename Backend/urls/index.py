@@ -12,4 +12,5 @@ urlpatterns = [
    path("blog/",include("Backend.urls.blog.index")),
    path("file/",include("Backend.urls.file.index")),
    path("video/",include("Backend.urls.video.index")),
+   path("chat/",include("Backend.urls.chat.index")),
 ]

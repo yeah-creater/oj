@@ -12,6 +12,9 @@ from Backend.models.file.file import File
 from Backend.models.file.file import FileLike
 from Backend.models.file.file import Comment
 from Backend.models.file.file import CommentLike
+
+from Backend.models.chat.chat import ChatList
+from Backend.models.chat.chat import ChatMessage
 # Register your models here.
 admin.site.register(Problem)
 
@@ -29,4 +32,7 @@ admin.site.register(File)
 admin.site.register(Comment)
 admin.site.register(FileLike)
 admin.site.register(CommentLike)
+
+admin.site.register(ChatList)
+admin.site.register(ChatMessage)
 

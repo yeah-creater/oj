@@ -19,7 +19,7 @@ class UserInfo(models.Model):
 
 # Follow图 7-8 表示7关注8
 class Follow(models.Model):
-    source = models.IntegerField(default=0)
-    target = models.IntegerField(default=0)
+    source = models.IntegerField(default = 0)
+    target = models.IntegerField(default = 0)
     def __str__(self):
         return str(self.source) + ' - ' + str(self.target)

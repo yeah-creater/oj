@@ -8,15 +8,18 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/
 """
 
 import os
-
-from channels.auth import AuthMiddlewareStack
+import django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'oj.settings')
+django.setup()
+from Backend.channelsmiddleware import JwtAuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
 from Backend.routing import websocket_urlpatterns
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'oj.settings')
+from channels.layers import get_channel_layer
+channel_layer = get_channel_layer()  # 实现服务器端进程向客户端调用函数
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
-    "websocket": AuthMiddlewareStack(URLRouter(websocket_urlpatterns))
+    "websocket": JwtAuthMiddlewareStack(URLRouter(websocket_urlpatterns))
 })
