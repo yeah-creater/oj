@@ -2,8 +2,8 @@ from django.db import models
 from django.utils.timezone import now
 from django.contrib.auth.models import User
 class ChatList(models.Model):
-    source = models.ForeignKey(User,related_name='user_send_list',on_delete=models.CASCADE,null=True)
-    target = models.ForeignKey(User,related_name='user_receive_list',on_delete=models.CASCADE,null=True)
+    source = models.ForeignKey(User,related_name='user_receive_list',on_delete=models.CASCADE,null=True)
+    target = models.ForeignKey(User,related_name='user_send_list',on_delete=models.CASCADE,null=True)
     unread = models.IntegerField(default = 0)
     update_time = models.DateTimeField(default = now)
     def __str__(self):

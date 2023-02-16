@@ -3,7 +3,6 @@ from django.utils.timezone import now
 
 class File(models.Model):
     content = models.TextField(max_length=8*1024*1024, blank=True, default='')
-    
     def __str__(self):
         return str(self.id)
 # 2->3 表示 2用户点赞 3文件

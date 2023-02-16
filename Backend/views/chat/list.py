@@ -8,30 +8,33 @@ from django.utils.timezone import now
 class ListView(APIView):
     permission_classes = ([IsAuthenticated])
     def get(self, request):
-        # try:
-        user_id = request.user.id
-        lists = ChatList.objects.filter(source = user_id)
-        data = ChatListSerializer(lists, many=True).data
-        return Response({
-            'result':'success',
-            'data':data,
-        })
-        # except:
-        #     return Response({
-        #         'result': "fail",
-        #         'data':'输入参数错误',
-        #     })
+        try:
+            user_id = request.user.id
+            lists = ChatList.objects.filter(source = user_id)
+            data = ChatListSerializer(lists, many=True).data
+            return Response({
+                'result':'success',
+                'data':data,
+            })
+        except:
+            return Response({
+                'result': "error",
+            })
     def post(self, request):
-        # try:
-        source = request.user.id
-        target = request.POST.get('target')
-        lists = ChatList.objects.filter(source_id = source, target_id = target)
-        if lists.exists():
-            lists.delete()
-            ChatList.objects.create(source_id = source, target_id = target)
-        else:
-            ChatList.objects.create(source_id = source, target_id = target)
+        try:
+            source = request.user.id
+            target = request.POST.get('target')
+            lists = ChatList.objects.filter(source_id = source, target_id = target)
+            if lists.exists():
+                lists.delete()
+                ChatList.objects.create(source_id = source, target_id = target)
+            else:
+                ChatList.objects.create(source_id = source, target_id = target)
 
-        return Response({
-            'result':'success',
-        })
+            return Response({
+                'result':'success',
+            })
+        except:
+            return Response({
+                'result': "error",
+            })

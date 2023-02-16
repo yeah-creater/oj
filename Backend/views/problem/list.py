@@ -10,18 +10,17 @@ class ListView(APIView):
     permission_classes = ([AllowAny])
 
     def get(self, request):
-        try:
-            problems = Problem.objects.filter(show = True)
-            pg = PageNumberPagination()
-            res = pg.paginate_queryset(problems,request)
-            serializer = ProblemListSerializer(res,many=True)
-            return Response({
-                'result':'success',
-                'total':(int)(math.ceil(len(problems)/pg.page_size)*10),
-                'data':serializer.data,
-            })
-        except:
-            return Response({
-                'result': "fail",
-                'data':'输入参数错误',
-            })
+        # try:
+        problems = Problem.objects.filter(show = True)
+        pg = PageNumberPagination()
+        res = pg.paginate_queryset(problems,request)
+        serializer = ProblemListSerializer(res,many=True)
+        return Response({
+            'result':'success',
+            'total':(int)(math.ceil(len(problems)/pg.page_size)*10),
+            'data':serializer.data,
+        })
+        # except:
+        #     return Response({
+        #         'result': "error",
+        #     })

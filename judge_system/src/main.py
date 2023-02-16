@@ -42,6 +42,8 @@ class JudgeMachine():
             return self.deal_debug_code(task)
         elif task.code_judge_type == 'submit':
             return self.deal_submit_code(task)
+        elif task.code_judge_type == 'contest':
+            return self.deal_submit_code(task)
         return ""
     def deal_debug_code(self,task):
         path = '../debug_record/'+str(task.record_id)+'/'
@@ -143,6 +145,8 @@ class JudgeMachine():
                 back['status'] = "Runtime Error"
                 return json.dumps(back)
         return json.dumps(back)
+    def deal_contest_code(self,task):
+        pass
 machine = JudgeMachine()
 class JudgeHandler:
    def judge_code(self, info, other):

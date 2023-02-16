@@ -33,5 +33,5 @@ class FollowView(APIView):
             })
         except:
             return Response({
-                'result': "fail",
+                'result': "error",
             })

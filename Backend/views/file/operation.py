@@ -14,50 +14,66 @@ class OperationView(APIView):
     permission_classes = ([IsAuthenticated])
 
     def post(self, request):
-        user_id = request.user.id
-        if request.POST.get('type') == 'solution':
-            file_id = find('solution',request.POST.get('solution_id'))
-            if file_id == 0:
+        try:
+            user_id = request.user.id
+            if request.POST.get('type') == 'solution':
+                file_id = find('solution',request.POST.get('solution_id'))
+                if file_id == 0:
+                    return Response({
+                    'result': "fail",
+                    })
+            elif request.POST.get('type') == 'blog':
+                file_id = find('blog',request.POST.get('blog_id'))
+                if file_id == 0:
+                    return Response({
+                    'result': "fail",
+                    })
+            elif request.POST.get('type') == 'video':
+                file_id = find('video',request.POST.get('video_id'))
+                if file_id == 0:
+                    return Response({
+                    'result': "fail",
+                    })
+            elif request.POST.get('type') == 'contest':
+                file_id = find('contest',request.POST.get('contest_id'))
+                if file_id == 0:
+                    return Response({
+                    'result': "fail",
+                    })
+            else:
                 return Response({
-                'result': "fail",
+                    'result':'输入参数错误',
                 })
-        elif request.POST.get('type') == 'blog':
-            file_id = find('blog',request.POST.get('blog_id'))
-            if file_id == 0:
-                return Response({
-                'result': "fail",
-                })
-        elif request.POST.get('type') == 'video':
-            file_id = find('video',request.POST.get('video_id'))
-            if file_id == 0:
-                return Response({
-                'result': "fail",
-                })
-        else:
+            data = request.POST
+            parentId = int(data.get('parentId'))
+            content = data.get('content')
+            file = File.objects.get(id = file_id)
+            address = UserInfo.objects.get(user_id = user_id).address
+            comment = Comment.objects.create(file = file,uid = user_id,address = address,parentId = parentId,content = content)
             return Response({
-                'result':'输入参数错误',
-            })
-        data = request.POST
-        parentId = int(data.get('parentId'))
-        content = data.get('content')
-        file = File.objects.get(id = file_id)
-        address = UserInfo.objects.get(user_id = user_id).address
-        comment = Comment.objects.create(file = file,uid = user_id,address = address,parentId = parentId,content = content)
-        return Response({
-            'result': "success",
-            'data':comment.id
+                'result': "success",
+                'data':comment.id
+                })
+        except:
+            return Response({
+                'result': "error",
             })
     def delete(self, request):
-        user_id = request.user.id
-        comment_id = request.POST.get('comment_id')
-        comment = Comment.objects.get(id = comment_id)
-        valid_user_id = comment.uid
-        if user_id != valid_user_id:
+        try:
+            user_id = request.user.id
+            comment_id = request.POST.get('comment_id')
+            comment = Comment.objects.get(id = comment_id)
+            valid_user_id = comment.uid
+            if user_id != valid_user_id:
+                return Response({
+                    'result':'无权限',
+                })
+            comment.delete()
             return Response({
-                'result':'无权限',
-            })
-        comment.delete()
-        return Response({
-                'result':'success',
+                    'result':'success',
+                })
+        except:
+            return Response({
+                'result': "error",
             })
         

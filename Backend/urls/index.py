@@ -13,4 +13,5 @@ urlpatterns = [
    path("file/",include("Backend.urls.file.index")),
    path("video/",include("Backend.urls.video.index")),
    path("chat/",include("Backend.urls.chat.index")),
+   path("contest/",include("Backend.urls.contest.index")),
 ]

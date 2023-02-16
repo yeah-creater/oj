@@ -26,5 +26,5 @@ class ImageCodeView(APIView):
             })
         except:
             return Response({
-                'result': "输入参数错误"
+                'result': "error"
             })

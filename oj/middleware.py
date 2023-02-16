@@ -1,9 +1,7 @@
 from django.http import JsonResponse
 from django.core.cache import cache
-try:
-    from django.utils.deprecation import MiddlewareMixin  # Django 1.10.x
-except ImportError:
-    MiddlewareMixin = object  # Django 1.4.x - Django 1.9.x
+from django.middleware.common import MiddlewareMixin
+from Backend.models.log.log import Log
 
 # 拦截器 处理登录验证码
 class  InterceptorMiddleware(MiddlewareMixin):
@@ -17,3 +15,10 @@ class  InterceptorMiddleware(MiddlewareMixin):
                     'result': "fail"
                 })
    
+class ExceptionMiddleware(MiddlewareMixin):
+    pass
+#     def process_exception(self, request, exception):
+#         Log.objects.create(request_path = request.get_full_path(), content = exception)
+#         return JsonResponse({
+#                 'result': "error"
+#             }) 

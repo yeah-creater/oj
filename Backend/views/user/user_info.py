@@ -33,5 +33,5 @@ class UserInfoView(APIView):
             })
         except:
             return Response({
-                'result': "fail",
+                'result': "error",
             })

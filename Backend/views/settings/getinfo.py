@@ -27,18 +27,18 @@ class GetInfoView(APIView):
                 'result': "输入参数错误"
             })
     def post(self, request):
-        # try:
-        data = request.POST
-        user_infos = UserInfo.objects.filter(user_id = request.user.id)
-        if UserInfo.objects.filter(name = data['name']).exists():
+        try:
+            data = request.POST
+            user_infos = UserInfo.objects.filter(user_id = request.user.id)
+            if UserInfo.objects.filter(name = data['name']).exists():
+                return Response({
+                'result': "昵称已存在"
+                })
+            user_infos.update(name = data['name'], gender = data['gender'],record = data['record'])
             return Response({
-            'result': "昵称已存在"
+                'result': "success"
             })
-        user_infos.update(name = data['name'], gender = data['gender'])
-        return Response({
-            'result': "success"
-        })
-        # except:
-        #     return Response({
-        #         'result': "输入参数错误"
-        #     })
+        except:
+            return Response({
+                'result': "error"
+            })

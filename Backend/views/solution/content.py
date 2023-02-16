@@ -11,27 +11,26 @@ class ContentView(APIView):
     permission_classes = ([AllowAny])
 
     def get(self, request):
-        # try:
-        solution_id = request.GET.get('solution_id')
-        if not Solution.objects.filter(id = solution_id,show = True).exists():
+        try:
+            solution_id = request.GET.get('solution_id')
+            if not Solution.objects.filter(id = solution_id,show = True).exists():
+                return Response({
+                'result':'fail',
+                })
+            solution = Solution.objects.get(id = solution_id,show = True)
+            content = solution.file.content
+            data = SolutionContentSerializer(solution).data
+            user_info = UserInfo.objects.get(user_id = data['user_id'])
+            data['user_info_name'] = user_info.name
+            data['user_info_photo'] = user_info.photo
+            data['content'] = content
+            if int(request.GET.get('md')) == 0:
+                data['content'] = md_to_html(content)
             return Response({
-            'result':'fail',
+                'result':'success',
+                'data':data
             })
-        solution = Solution.objects.get(id = solution_id,show = True)
-        content = solution.file.content
-        data = SolutionContentSerializer(solution).data
-        user_info = UserInfo.objects.get(user_id = data['user_id'])
-        data['user_info_name'] = user_info.name
-        data['user_info_photo'] = user_info.photo
-        data['content'] = content
-        if int(request.GET.get('md')) == 0:
-            data['content'] = md_to_html(content)
-        return Response({
-            'result':'success',
-            'data':data
-        })
-        # except:
-        #     return Response({
-        #         'result': "fail",
-        #         'data':'输入参数错误',
-        #     })
+        except:
+            return Response({
+                'result': "error",
+            })
