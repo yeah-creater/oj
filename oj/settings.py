@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%@(ve8&cc^$mvx7xks8%!dr_0&#utzt@x2_qg61&7thhbespsu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['106.15.183.53','app2105.acapp.acwing.com.cn']
 
@@ -33,6 +33,9 @@ ALLOWED_HOSTS = ['106.15.183.53','app2105.acapp.acwing.com.cn']
 
 INSTALLED_APPS = [
     # 'corsheaders',
+    
+    'simplepro',
+    'simpleui',
     'rest_framework',
     'rest_framework_simplejwt',
     'django.contrib.admin',
@@ -44,6 +47,8 @@ INSTALLED_APPS = [
     'django_filters',
     'Backend.apps.BackendConfig',
     'channels',
+    'import_export',
+
 ]
 
 MIDDLEWARE = [
@@ -56,6 +61,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'oj.middleware.InterceptorMiddleware',
     'oj.middleware.ExceptionMiddleware',
+    'simplepro.middlewares.SimpleMiddleware',
 ]
 
 
@@ -161,7 +167,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 
-
+VIDEO_PATH = os.path.join(BASE_DIR,'media/video/') 
 TEST_CASE_PATH = os.path.join(BASE_DIR,'judge_system/test_case/') 
 
 # Default primary key field type

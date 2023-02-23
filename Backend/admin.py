@@ -21,19 +21,55 @@ from Backend.models.log.log import Log
 
 from Backend.models.contest.contest import Contest
 from Backend.models.contest.contest import ContestParticipant
+
+from Backend.models.notification.notification import Notification
+
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin, ImportExportActionModelAdmin
+admin.site.site_title="OnlineJudge后台"
+admin.site.site_header = "OnlineJudge后台管理"
 # Register your models here.
-admin.site.register(Problem)
-admin.site.register(AcProblem)
-
-admin.site.register(SubmitRecord)
+# admin.site.register(UserInfo)
+@admin.register(UserInfo)
+class UserInfoAdmin(admin.ModelAdmin):
+    # list_display = 你需要展示的字段应该写在这里,此处是数据库中的字段
+    list_display = ('user','name','sno','gender','address','Status')
+    # search_fields = 用于添加一个搜索框
+    search_fields = ('name','sno')
+    # list_filter = 设置一个过滤器
+    list_filter = ("name",'forbidden')
+    # list_editable = ('name',)
+    # readonly_fields = ("hostCPU","hostMEM",)
+@admin.register(Problem)
+class ProblemAdmin(admin.ModelAdmin):
+    # list_display = 你需要展示的字段应该写在这里,此处是数据库中的字段
+    list_display = ('title','source','Difficulty')
+    # search_fields = 用于添加一个搜索框
+    search_fields = ('title','source')
+    # list_filter = 设置一个过滤器
+    list_filter = ("title",'source')
+@admin.register(AcProblem)
+class AcProblemAdmin(admin.ModelAdmin):
+    list_display = ('user','problem')
+@admin.register(SubmitRecord)
+class SubmitRecordAdmin(admin.ModelAdmin):
+    list_display = ('user_id','problem_id','Status')
+    # search_fields = 用于添加一个搜索框
+    search_fields = ('user_id','problem_id','status')
+    list_filter = ('user_id','problem_id','status')
 admin.site.register(DebugRecord)
-admin.site.register(UserInfo)
-admin.site.register(Follow)
 
-admin.site.register(Solution)
-admin.site.register(Blog)
-admin.site.register(Video)
+@admin.register(Follow)
+class FollowAdmin(admin.ModelAdmin):
+    list_display = ('source','target')
+    search_fields = ('source','target')
+    list_filter = ('source','target')
 
+
+@admin.register(Solution,Blog,Video)
+class FileAdmin(admin.ModelAdmin):
+    list_display = ('user_id','title','file')
+    list_filter =  ('user_id','title','file')
 
 admin.site.register(File)
 admin.site.register(Comment)
@@ -41,12 +77,25 @@ admin.site.register(FileLike)
 admin.site.register(CommentLike)
 
 admin.site.register(ChatList)
-admin.site.register(ChatMessage)
+@admin.register(ChatMessage)
+class ChatMessageAdmin(admin.ModelAdmin):
+    list_display = ('source','target','content')
+    list_filter =  ('source','target')
 
 admin.site.register(Log)
 
 admin.site.register(Contest)
-admin.site.register(ContestParticipant)
+
+class ProxyResource(resources.ModelResource):
+    class Meta:
+        model = ContestParticipant
+@admin.register(ContestParticipant)
+class ContestParticipantAdmin(ImportExportActionModelAdmin):
+    list_display = ('contest','user','score','penalty')
+    list_filter =  ('contest','user','score')
+    resource_class = ProxyResource
+
+admin.site.register(Notification)
 
 
 

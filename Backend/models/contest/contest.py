@@ -12,6 +12,8 @@ class Contest(models.Model):
     over_time = models.DateTimeField(default = now)
     class Meta:
         ordering = ['-start_time']
+    def __str__(self):
+        return self.name
 
 class ContestParticipant(models.Model):
     contest = models.ForeignKey(Contest,related_name='contest_participant',on_delete=models.CASCADE,null=True) 

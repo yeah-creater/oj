@@ -4,4 +4,4 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 
 def index(request):
-    return redirect("token_obtain_pair")
+    return render(request,'index.html')

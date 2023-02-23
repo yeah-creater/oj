@@ -10,7 +10,7 @@ class FileLike(models.Model):
     source = models.IntegerField(default = 0)
     target = models.IntegerField(default = 0)
     def __str__(self):
-        return str(self.source) + ' - ' + str(self.target)
+        return str(self.source) + ' good at ' + str(self.target)
 
 # 字段名称不得已与前端接口一致
 class Comment(models.Model):
@@ -23,6 +23,8 @@ class Comment(models.Model):
     createTime = models.DateTimeField(default = now)
     class Meta:
         ordering = ['-createTime']
+    def __str__(self):
+        return str(self.uid)+':'+self.content
     
 # 2->3 表示 2用户点赞 3评论
 class CommentLike(models.Model):

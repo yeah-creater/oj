@@ -16,9 +16,8 @@ class  InterceptorMiddleware(MiddlewareMixin):
                 })
    
 class ExceptionMiddleware(MiddlewareMixin):
-    pass
-#     def process_exception(self, request, exception):
-#         Log.objects.create(request_path = request.get_full_path(), content = exception)
-#         return JsonResponse({
-#                 'result': "error"
-#             }) 
+    def process_exception(self, request, exception):
+        Log.objects.create(request_path = request.get_full_path(), content = exception)
+        return JsonResponse({
+                'result': "error"
+            }) 

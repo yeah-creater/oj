@@ -11,6 +11,6 @@ class Solution(models.Model):
     problem = models.ForeignKey(Problem,on_delete=models.CASCADE,related_name="problem_solutions",null=True)
     create_time = models.DateTimeField(default = now)
     def __str__(self):
-        return self.title
+        return 'user_id:'+str(self.user_id)+' title:'+self.title+' show:'+str(self.show)
     class Meta:
         ordering = ['-create_time']

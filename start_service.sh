@@ -1,3 +1,5 @@
+#nginx
+sudo service nginx start
 # redis
 sudo redis-server /etc/redis/redis.conf
 # websocket

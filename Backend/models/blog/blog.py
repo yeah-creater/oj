@@ -12,3 +12,5 @@ class Blog(models.Model):
     create_time = models.DateTimeField(default = now)
     class Meta:
         ordering = ['-create_time']
+    def __str__(self):
+        return 'user_id:'+str(self.user_id)+' title:'+self.title+' show:'+str(self.show)

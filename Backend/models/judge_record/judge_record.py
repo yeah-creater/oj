@@ -1,5 +1,7 @@
 from django.db import models
 import django.utils.timezone as timezone
+from django.utils.html import format_html
+
 class SubmitRecord(models.Model):
     user_id = models.IntegerField(blank=True,default = 0) 
     problem_id = models.IntegerField(blank=True,default = 0) 
@@ -10,6 +12,12 @@ class SubmitRecord(models.Model):
     contest_id = models.IntegerField(blank=True,default = 0)
     def __str__(self):
         return str(self.user_id)
+    def Status(self):
+        if self.status == 'Accepted':
+            format_td = format_html('<span style="padding:2px;background-color:green;color:white">'+self.status+'</span>')
+        else:
+            format_td = format_html('<span style="padding:2px;background-color:red;color:black">'+self.status+'</span>')
+        return format_td
     class Meta:
         ordering = ['-time']
 class DebugRecord(models.Model):

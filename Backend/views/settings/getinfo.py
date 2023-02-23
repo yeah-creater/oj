@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from Backend.models.user.user import UserInfo
 from Backend.models.user.serializers import UserInfoSerializer
+from Backend.models.notification.notification import Notification
 import datetime
 class GetInfoView(APIView):
     permission_classes = ([IsAuthenticated])
@@ -17,10 +18,11 @@ class GetInfoView(APIView):
                 return Response({
                 'result':'用户已被封禁',
                 })
-            serializer = UserInfoSerializer(user_info)
+            data = UserInfoSerializer(user_info).data
+            data['notification_count'] = Notification.objects.filter(source_id = user_id, read = False).count()
             return Response({
                 'result':'success',
-                'data':serializer.data,
+                'data':data,
             })
         except:
             return Response({
@@ -34,7 +36,7 @@ class GetInfoView(APIView):
                 return Response({
                 'result': "昵称已存在"
                 })
-            user_infos.update(name = data['name'], gender = data['gender'],record = data['record'])
+            user_infos.update(name = data['name'], gender = data['gender'],record = data['record'],sno=data['sno'])
             return Response({
                 'result': "success"
             })

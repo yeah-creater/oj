@@ -7,7 +7,7 @@ class ChatList(models.Model):
     unread = models.IntegerField(default = 0)
     update_time = models.DateTimeField(default = now)
     def __str__(self):
-        return str(self.source)
+        return str(self.source.id)+'->'+str(self.target.id)
     class Meta:
         ordering = ['-update_time']
 
@@ -16,5 +16,7 @@ class ChatMessage(models.Model):
     target = models.ForeignKey(User,related_name='user_receive_message',on_delete=models.CASCADE,null=True)
     content = models.TextField(max_length=2048,null=True)
     create_time = models.DateTimeField(default = now)
+    def __str__(self):
+        return str(self.source.id)+'->'+str(self.target.id)+':'+self.content
     class Meta:
         ordering = ['create_time']
