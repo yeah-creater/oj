@@ -18,7 +18,7 @@ def judge(task,path):
                     env=[],
                     log_path="../log/judger.log",
                     # can be None
-                    seccomp_rule_name="c_cpp",
+                    seccomp_rule_name = 'c_cpp',
                     uid=0,
                     gid=0)
     return ret

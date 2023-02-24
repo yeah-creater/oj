@@ -46,6 +46,13 @@ class JudgeMachine():
             return self.deal_submit_code(task)
         return ""
     def deal_debug_code(self,task):
+        if task.problem_content_language == 'C++':
+            return self.deal_debug_code_cpp(task)
+        elif task.problem_content_language == 'C':
+            return self.deal_debug_code_c(task)
+        else:
+            pass
+    def deal_debug_code_cpp(self,task):
         path = '../debug_record/'+str(task.record_id)+'/'
         os.makedirs(path)
         code = task.problem_content_code
@@ -96,7 +103,57 @@ class JudgeMachine():
         elif value == 4:
             back['status'] = "Runtime Error"
         return json.dumps(back)
+    def deal_debug_code_c(self,task):
+        path = '../debug_record/'+str(task.record_id)+'/'
+        os.makedirs(path)
+        code = task.problem_content_code
+        back={}
+        # 将代码输出到main.cpp 并将debug_input写入1.in
+        if code != None:
+            f = open(path+'main.c','w')
+            f.write(code)
+            if task.debug_code_input == None:
+                task.debug_code_input = " "
+            f = open(path+'1.in','w')
+            f.write(task.debug_code_input)
+            f.close()
+        if os.system("gcc "+path+"main.c"+" -O2 -Wall -lm --static -DONLINE_JUDGE -o "+path+"main"):
+            result = subprocess.getoutput("gcc "+path+"main.c"+" -O2 -Wall -lm --static -DONLINE_JUDGE -o "+path+"main")
+            back['status'] = 'Compile Error'
+            back['result'] = result 
+            return json.dumps(back)
+        value = judge(task, {
+            'exe_path':path+'main',
+            'input_path':path+'1.in',
+            'output_path':path+'1.out',
+            'error_path':path+'1.out',
+        })
+        print(value)
+        back['real_time'] = value.get('real_time')
+        value = value.get('result')
+        back['status'] = 'Finished'
+       
+        back['result'] = ''
+        if value == 0: 
+            f = open(path+'1.out','r')
+            result = f.read()
+            f.close()
+            back['result'] = result
+        elif value == 1 or value == 2:
+            back['status'] = "Time Limit Exceeded"
+        elif value == 3:
+            back['status'] = "Memory Limit Exceeded"
+        elif value == 4:
+            back['status'] = "Runtime Error"
+        return json.dumps(back)
     def deal_submit_code(self,task):
+        if task.problem_content_language == 'C++':
+            return self.deal_submit_code_cpp(task)
+        elif task.problem_content_language == 'C':
+            return self.deal_submit_code_c(task)
+        else:
+            pass
+    def deal_submit_code_cpp(self,task):
         path = '../submit_record/'+str(task.record_id)+'/'
         os.makedirs(path)
         code = task.problem_content_code
@@ -109,6 +166,55 @@ class JudgeMachine():
             f.close()
         if os.system("g++ "+path+"main.cpp"+" -o2 -o "+path+"main"):
             result = subprocess.getoutput("g++ "+path+"main.cpp"+" -o2 -o "+path+"main")
+            back['status'] = 'Compile Error'
+            return json.dumps(back)
+        input_path='../test_case/' + str(task.problem_content_id) + '/in/'
+        answer_path='../test_case/' + str(task.problem_content_id) + '/out/'
+        # 测试代码
+        # 获取 测试数据的数量
+        sz = len(os.listdir(input_path))
+        for i in range(1,sz + 1):
+            value = judge(task, {
+            'exe_path':path + 'main',
+            'input_path':input_path + str(i) + '.in',
+            'output_path':path + str(i) + '.out',
+            'error_path':path + 'error.out',
+            })
+            print(value)
+            value = value.get('result')
+            if value == 0: 
+                user_f = open(path + str(i) + '.out','r')
+                answer_f = open(answer_path + str(i) + '.out','r')
+                user_output = user_f.read().rstrip()
+                answer_output = answer_f.read().rstrip()
+                user_f.close()
+                answer_f.close()
+                if user_output != answer_output:
+                    back['status'] = 'Wrong Answer'
+                    return json.dumps(back)
+            elif value == 1 or value == 2:
+                back['status'] = "Time Limit Exceeded"
+                return json.dumps(back)
+            elif value == 3:
+                back['status'] = "Memory Limit Exceeded"
+                return json.dumps(back)
+            elif value == 4:
+                back['status'] = "Runtime Error"
+                return json.dumps(back)
+        return json.dumps(back)
+    def deal_submit_code_c(self,task):
+        path = '../submit_record/'+str(task.record_id)+'/'
+        os.makedirs(path)
+        code = task.problem_content_code
+        back={}
+        back['status']='Accepted'
+        # # 将代码输出到main.cpp 
+        if code != None:
+            f = open(path+'main.c','w')
+            f.write(code)
+            f.close()
+        if os.system("gcc "+path+"main.c"+" -o2 -o "+path+"main"):
+            result = subprocess.getoutput("gcc "+path+"main.c"+" -o2 -o "+path+"main")
             back['status'] = 'Compile Error'
             return json.dumps(back)
         input_path='../test_case/' + str(task.problem_content_id) + '/in/'

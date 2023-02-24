@@ -14,6 +14,7 @@ from thrift.protocol import TBinaryProtocol
 from judge_system.src.judge_server.judge_service import Judge
 from django.utils import timezone  
 import json
+SUPPORT_LANGUAGES = {'C++','Python3','C'}
 class JudgeView(APIView):
     permission_classes = ([IsAuthenticated])
 
@@ -21,6 +22,11 @@ class JudgeView(APIView):
         # try:
         data = request.POST.copy()
         back = ''
+        print(data.get('problem_content_language'))
+        if not data.get('problem_content_language') in SUPPORT_LANGUAGES:
+            return Response({
+                 'result': "error"
+             })
         if(data.get('code_judge_type') == 'submit'):
             # 当前题目为竞赛题且在比赛期间(偷懒了..)
             now = timezone.now()
