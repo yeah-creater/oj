@@ -91,6 +91,7 @@ class ProxyResource(resources.ModelResource):
         model = ContestParticipant
 @admin.register(ContestParticipant)
 class ContestParticipantAdmin(ImportExportActionModelAdmin):
+# class ContestParticipantAdmin(admin.ModelAdmin):
     list_display = ('contest','user','score','penalty')
     list_filter =  ('contest','user','score')
     resource_class = ProxyResource

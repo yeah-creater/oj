@@ -49,30 +49,27 @@ class OperationView(APIView):
                 'result': "error",
             })
     def put(self,request):
-        try:
-            data = request.POST
-            user_id = request.user.id
-            blog_id = int(data.get('blog_id',""))
-            title = data.get('title','').strip()
-            content = data.get('content','')
-            if not Blog.objects.filter(id = blog_id,show = True).exists():
-                return Response({
-                    'result': "fail",
-                })
-            blog = Blog.objects.get(id = blog_id)
-            if blog.user_id != user_id:
-                return Response({
-                    'result': "fail",
-                })
-            blog.title = title
-            blog.file.content = content
-            blog.save()
-            blog.file.save()
+        data = request.POST
+        user_id = request.user.id
+        blog_id = int(data.get('blog_id',""))
+        title = data.get('title','').strip()
+        tags = data.get('tags')
+        content = data.get('content','')
+        if not Blog.objects.filter(id = blog_id,show = True).exists():
             return Response({
-                    'result': "success",
-                })
-        except:
+                'result': "fail",
+            })
+        blog = Blog.objects.get(id = blog_id)
+        if blog.user_id != user_id:
             return Response({
-                'result': "error",
+                'result': "fail",
+            })
+        blog.title = title
+        blog.file.content = content
+        blog.tags = tags
+        blog.save()
+        blog.file.save()
+        return Response({
+                'result': "success",
             })
         

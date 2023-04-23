@@ -9,6 +9,7 @@ class File(models.Model):
 class FileLike(models.Model):
     source = models.IntegerField(default = 0)
     target = models.IntegerField(default = 0)
+    time = models.DateTimeField(default = now)
     def __str__(self):
         return str(self.source) + ' good at ' + str(self.target)
 
@@ -30,5 +31,6 @@ class Comment(models.Model):
 class CommentLike(models.Model):
     source = models.IntegerField(default=0)
     target = models.IntegerField(default=0)
+    time = models.DateTimeField(default = now)
     def __str__(self):
         return str(self.source) + ' - ' + str(self.target)

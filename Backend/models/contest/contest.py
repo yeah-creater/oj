@@ -7,7 +7,7 @@ class Contest(models.Model):
     user = models.ForeignKey(User,related_name='user_contest',on_delete=models.CASCADE,null=True) 
     participants = models.IntegerField(default = 0)
     file = models.OneToOneField(File,related_name='file_contest',on_delete=models.CASCADE,null=True) 
-
+    clear = models.BooleanField(default = False)
     start_time = models.DateTimeField(default = now)
     over_time = models.DateTimeField(default = now)
     class Meta:

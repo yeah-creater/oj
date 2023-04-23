@@ -13,6 +13,7 @@ class UserInfo(models.Model):
     gender = models.CharField(choices = GENDER_CHOICES,default='male',max_length=16)
     birthday = models.DateField(default = now)
     level = models.IntegerField(default = 1)
+    rating = models.IntegerField(default = 1500)
     record = models.TextField(max_length = 1024,default='',blank = True)
     address = models.CharField(max_length = 1024,default = '中国')
     photo = models.URLField(max_length=256,blank=True,default="https://app2105.acapp.acwing.com.cn/media/profile/default.jpg")
@@ -27,7 +28,8 @@ class UserInfo(models.Model):
             format_td = format_html('<span style="padding:2px;background-color:red;color:black">封禁</span>')
         return format_td
     Status.short_description = "status"
-
+    class Meta:
+        ordering = ['-rating']
 # Follow图 7-8 表示7关注8
 class Follow(models.Model):
     source = models.IntegerField(default = 0)

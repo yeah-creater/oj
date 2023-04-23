@@ -25,7 +25,6 @@ SECRET_KEY = 'django-insecure-%@(ve8&cc^$mvx7xks8%!dr_0&#utzt@x2_qg61&7thhbespsu
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
 ALLOWED_HOSTS = ['106.15.183.53','app2105.acapp.acwing.com.cn']
 
 
@@ -33,8 +32,7 @@ ALLOWED_HOSTS = ['106.15.183.53','app2105.acapp.acwing.com.cn']
 
 INSTALLED_APPS = [
     # 'corsheaders',
-    
-    'simplepro',
+    # 'simplepro',
     'simpleui',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -61,7 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'oj.middleware.InterceptorMiddleware',
     'oj.middleware.ExceptionMiddleware',
-    'simplepro.middlewares.SimpleMiddleware',
+    # 'simplepro.middlewares.SimpleMiddleware',
 ]
 
 
@@ -160,11 +158,13 @@ USE_TZ = True
 # STATICFILES_DIRS = (
 #   os.path.join(BASE_DIR, 'static'),
 # )
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
 
 
 VIDEO_PATH = os.path.join(BASE_DIR,'media/video/') 
@@ -240,4 +240,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = '1615498405@qq.com'
 EMAIL_HOST_PASSWORD = 'bgrkhhqggcwydfge'
+
 

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import os
-from simplepro.editor import fields
+# from simplepro.editor import fields
 from django.utils.html import format_html
 DIFFICULTY_CHOICES=(('简单','简单'),
               ('中等','中等'),
@@ -25,12 +25,18 @@ class Problem(models.Model):
     submit_nums = models.IntegerField(default=0)
     ac_nums = models.IntegerField(default=0)
     source = models.CharField(choices=SOURCE_CHOICES, default='ZCOJ', max_length=30)
-    description = fields.MDTextField(max_length=256*1024,blank=True,default='')
-    input_format = fields.MDTextField(max_length=128*1024,blank=True,default='')
-    output_format = fields.MDTextField(max_length=128*1024,blank=True,default='')
-    data_range = fields.MDTextField(max_length=32*1024,blank=True,default='')
-    input_example = fields.MDTextField(max_length=32*1024,blank=True,default='')
-    output_example = fields.MDTextField(max_length=32*1024,blank=True,default='')
+    # description = fields.MDTextField(max_length=256*1024,blank=True,default='')
+    # input_format = fields.MDTextField(max_length=128*1024,blank=True,default='')
+    # output_format = fields.MDTextField(max_length=128*1024,blank=True,default='')
+    # data_range = fields.MDTextField(max_length=32*1024,blank=True,default='')
+    # input_example = fields.MDTextField(max_length=32*1024,blank=True,default='')
+    # output_example = fields.MDTextField(max_length=32*1024,blank=True,default='')
+    description = models.TextField(max_length=256*1024,blank=True,default='')
+    input_format = models.TextField(max_length=128*1024,blank=True,default='')
+    output_format = models.TextField(max_length=128*1024,blank=True,default='')
+    data_range = models.TextField(max_length=32*1024,blank=True,default='')
+    input_example = models.TextField(max_length=32*1024,blank=True,default='')
+    output_example = models.TextField(max_length=32*1024,blank=True,default='')
     contest = models.IntegerField(default = 0)
     def __str__(self):
         return self.title

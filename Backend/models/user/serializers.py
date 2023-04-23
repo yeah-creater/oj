@@ -8,4 +8,9 @@ class UserInfoSerializer(serializers.ModelSerializer):
         model = UserInfo
         fields = '__all__'
 
+class UserInfoRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserInfo
+        fields = ['id','name','photo','rating']
+
 

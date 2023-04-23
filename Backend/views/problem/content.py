@@ -5,13 +5,12 @@ from Backend.models.problem.problem import Problem
 from Backend.models.problem.serializers import ProblemSerializer
 from Backend.models.contest.contest import Contest
 from Backend.models.contest.contest import ContestParticipant
-import markdown
+import markdown2
 import datetime
+
 EXTENTIONS = [
-    'markdown.extensions.extra',
-    'markdown.extensions.codehilite',
-    'markdown.extensions.toc',
-    'markdown.extensions.tables'
+    'markdown.extensions.extra',  # 增加额外的Markdown语法支持，如表格、代码块等
+    'markdown.extensions.codehilite',  # 增加代码高亮支持
 ]
 KEYS=('description','input_format','output_format','data_range',
 'input_example','output_example')
@@ -44,7 +43,7 @@ class ContentView(APIView):
         data = serializer.data
         for key in KEYS:
             val = data.get(key)
-            data[key]=markdown.markdown(val,extensions = EXTENTIONS)
+            data[key]=markdown2.markdown(val,extras = EXTENTIONS)
         return Response({
             'result':'success',
             'data':data,
