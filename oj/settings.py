@@ -241,4 +241,3 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = '1615498405@qq.com'
 EMAIL_HOST_PASSWORD = 'bgrkhhqggcwydfge'
 
-

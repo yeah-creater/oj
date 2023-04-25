@@ -11,26 +11,21 @@ class ContentView(APIView):
     permission_classes = ([AllowAny])
 
     def get(self, request):
-        try:
-            blog_id = request.GET.get('blog_id')
-            if not Blog.objects.filter(id = blog_id,show = True).exists():
-                return Response({
-                'result':'fail',
-                })
-            blog = Blog.objects.get(id = blog_id,show = True)
-            data = BlogContentSerializer(blog).data
-            user_info = UserInfo.objects.get(user_id = data['user_id'])
-            content = blog.file.content
-            data['user_info_name'] = user_info.name
-            data['user_info_photo'] = user_info.photo
-            data['content'] = content
-            if int(request.GET.get('md')) == 0:
-                data['content'] = md_to_html(content)
+        blog_id = request.GET.get('blog_id')
+        if not Blog.objects.filter(id = blog_id,show = True).exists():
             return Response({
-                'result':'success',
-                'data':data
+            'result':'fail',
             })
-        except:
-            return Response({
-                'result': "error",
-            })
+        blog = Blog.objects.get(id = blog_id,show = True)
+        data = BlogContentSerializer(blog).data
+        user_info = UserInfo.objects.get(user_id = data['user_id'])
+        content = blog.file.content
+        data['user_info_name'] = user_info.name
+        data['user_info_photo'] = user_info.photo
+        data['content'] = content
+        if int(request.GET.get('md')) == 0:
+            data['content'] = md_to_html(content)
+        return Response({
+            'result':'success',
+            'data':data
+        })
