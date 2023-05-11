@@ -4,6 +4,9 @@
         </TitleBase>
         <hr>
         <div class="row justify-content-md-left">
+             <div class="col-md-12 col-sm-12">
+                    <MyspaceContestView></MyspaceContestView>
+                </div>
             <div class="col-md-12 col-sm-12">
                 <el-table size="large" empty-text="空空如也" :data="data" stripe>
                         <el-table-column  prop="standing" label="排名" width="auto" min-width="25%" />
@@ -18,24 +21,42 @@
 <script>
 import ContentBase from '@/components/ContentBase.vue';
 import TitleBase from '@/components/TitleBase.vue';
-import { ref } from 'vue';
+import { reactive, ref} from 'vue';
 import { useStore } from 'vuex';
 import $ from 'jquery';
+import MyspaceContestView from '@/views/user/myspace/MyspaceContestView.vue';
 export default {
     name: 'ContestRatingView',
     components: {
         ContentBase,
         TitleBase,
+        MyspaceContestView,
     },
     setup() { 
         let title = ref('积分排行榜'), data = ref([]);
         const store = useStore();
+        
         const formatter_user = (row, column, value, index) => {
+            let color = '#CCCCCC';
+            let rating = data.value[index]['rating']
+            if (rating < 1200) color = '#CCCCCC';
+            else if (rating < 1400) color = '#77FF77';
+            else if (rating < 1600) color = '#77DDBB';
+            else if (rating < 1900) color = '#AAAAFF';
+            else if (rating < 2100) color = '#FF88FF';
+            else if (rating < 2300) color = '#FFCC88';
+            else if (rating < 2400) color = '#FFBB55';
+            else if (rating < 2600) color = '#FF7777';
+            else if (rating < 3000) color = '#FF3333';
+            else color = '#AA0000';
+            const style = reactive({
+                color: color,
+            });
             let user_path = "/user/myspace/" + data.value[index]['id'] + "/";
-            return <router-link style="color: #337ab7;text-decoration: none;" to={user_path}>
+            return <router-link  style="size:20px;color: #337ab7;text-decoration: none;" to={user_path}>
                 <img style="border-radius:50%" width={30} src={data.value[index]['photo']} alt="~">
                 </img>&nbsp;
-                <span>{data.value[index]['name']}</span>
+                <span style={style}> {data.value[index]['name']}</span>
             </router-link>
         }
         const getContestRatings = () => {
@@ -59,4 +80,6 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

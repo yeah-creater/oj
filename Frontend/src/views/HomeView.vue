@@ -18,7 +18,7 @@
 import ContentBase from '@/components/ContentBase';
 import { ref } from 'vue'
 import router from '@/router'
-import WeatherBase from '@/components/WeatherBase'
+import WeatherBase from '@/components/WeatherBase';
 export default {
   name: 'HomeView',
   components: {

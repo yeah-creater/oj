@@ -22,6 +22,13 @@ export default {
     },
     setup() { 
         const music_list = [
+            // {
+            //     name: '我好像在哪见过你',
+            //     author: '薛之谦',
+            //     url: 'https://music.163.com/#/song?id=417859631',
+            //     img: 'http://p2.music.126.net/RULxHXSxE9mexfOYjuPepQ==/109951167902563016.jpg?param=130y130',
+            //     lrc:`[00:00.000] 作词 : 藤井树`,
+            // },
             {
                 name: '爱情的句型',
                 author: '王心凌',

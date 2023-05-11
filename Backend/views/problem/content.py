@@ -5,8 +5,8 @@ from Backend.models.problem.problem import Problem
 from Backend.models.problem.serializers import ProblemSerializer
 from Backend.models.contest.contest import Contest
 from Backend.models.contest.contest import ContestParticipant
-import markdown2
 import datetime
+from Backend.utils.md_to_html import md_to_html
 
 EXTENTIONS = [
     'markdown.extensions.extra',  # 增加额外的Markdown语法支持，如表格、代码块等
@@ -43,7 +43,7 @@ class ContentView(APIView):
         data = serializer.data
         for key in KEYS:
             val = data.get(key)
-            data[key]=markdown2.markdown(val,extras = EXTENTIONS)
+            data[key]=md_to_html(val)
         return Response({
             'result':'success',
             'data':data,

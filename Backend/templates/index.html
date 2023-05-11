@@ -7,24 +7,46 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" href="https://codeforces.com/predownloaded/70/37/703737cf76db63e4b7bbb9fd63a01a3dc446371e.png">
     <title>SmartOnlineJudge</title>
-    <script defer="defer" src="https://app2105.acapp.acwing.com.cn/static/oj/js/chunk-vendors.6093a7e2.js"></script>
-    <script defer="defer" src="https://app2105.acapp.acwing.com.cn/static/oj/js/app.2432cbb1.js"></script>
-    <link href="https://app2105.acapp.acwing.com.cn/static/oj/css/chunk-vendors.6f794449.css" rel="stylesheet">
-    <link href="https://app2105.acapp.acwing.com.cn/static/oj/css/app.3a2880be.css" rel="stylesheet">
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-          config: ["MMLorHTML.js"],
-          jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-          extensions: ["MathMenu.js", "MathZoom.js"]
-        });
-    </script>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" />
+    <script src="https://cdn.acwing.com/static/jquery/js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+    <script defer="defer" src="https://app2105.acapp.acwing.com.cn/static/oj/js/chunk-vendors.js"></script>
+    <script defer="defer" src="https://app2105.acapp.acwing.com.cn/static/oj/js/app.js"></script>
+    <link href="https://app2105.acapp.acwing.com.cn/static/oj/css/chunk-vendors.css" rel="stylesheet">
+    <link href="https://app2105.acapp.acwing.com.cn/static/oj/css/app.css" rel=" stylesheet">
+    <script
+        type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}, showMathMenu: false, });</script>
+    <script src="https://cdn.acwing.com/static/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <style>
+    </style>
 </head>
 
 <body><noscript><strong>We're sorry but online_judge doesn't work properly without JavaScript enabled. Please enable it
             to continue.</strong></noscript>
     <div id="app"></div>
 </body>
+<script>
+    //执行复制代码操作
+    function preCopy(obj) {
+        //执行复制
+        let btn = $(obj);
+        let pre = btn.parent();
+        //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+        let temp = $("<textarea></textarea>");
+        //避免复制内容时把按钮文字也复制进去。先临时置空
+        btn.text("");
+        temp.text(pre.text());
+        temp.appendTo(pre);
+        temp.select();
+        document.execCommand("Copy");
+        temp.remove();
+        //修改按钮名
+        btn.text("复制成功");
+        //一定时间后吧按钮名改回来
+        setTimeout(() => {
+            btn.text("复制代码");
+        }, 1500);
+    }
+</script>
 
 </html>

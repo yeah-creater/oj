@@ -141,10 +141,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
+# LANGUAGE_CODE = 'zh-cn'
 TIME_ZONE = 'Asia/Shanghai'
-
+# 去掉默认Logo或换成自己Logo链接
+SIMPLEUI_LOGO = "https://codeforces.com/predownloaded/70/37/703737cf76db63e4b7bbb9fd63a01a3dc446371e.png"
 USE_I18N = True
 
 USE_L10N = True

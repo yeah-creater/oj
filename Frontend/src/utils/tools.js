@@ -1,3 +1,4 @@
+import $ from 'jquery'
 let getFormatTime = (time) => {
     let dateTime = new Date(time);
     let no1new = dateTime.valueOf();
@@ -27,6 +28,18 @@ let getFormatTime = (time) => {
     }
     return timeSpanStr;
 }
+let addCopy = () => {
+    //给每一串代码元素增加复制代码节点
+    let preList = $("pre");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $(
+            "<span  class=\"btn-pre-copy\" onclick='preCopy(this)'>复制代码</span>"
+        );
+        btn.prependTo(pre);
+    }
+}
 export {
+    addCopy,
     getFormatTime,
 }

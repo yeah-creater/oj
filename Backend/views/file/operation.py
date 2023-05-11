@@ -10,11 +10,16 @@ from Backend.models.user.serializers import UserInfoSerializer
 from Backend.models.file.file import File
 from Backend.models.file.file import Comment
 from Backend.utils.find_file_id import find
+from Backend.utils.comment_filter import query
 class OperationView(APIView):
     permission_classes = ([IsAuthenticated])
 
     def post(self, request):
         try:
+            # if not query(request.POST.get('content')):
+            #     return Response({
+            #         'result': "该评论涉及冒犯性语言，请重新评论~~~",
+            #     })
             user_id = request.user.id
             if request.POST.get('type') == 'solution':
                 file_id = find('solution',request.POST.get('solution_id'))

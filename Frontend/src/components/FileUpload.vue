@@ -12,7 +12,9 @@
             :data="data"
             :auto-upload="false" drag :multiple=true
             :on-success="uploadSuccess"
-            :headers=headers>
+            :headers=headers
+            :slice="true"
+            :chunk-size="1024 * 1024">
             <el-icon class="el-icon--upload">
                 <UploadFilled style="width:60px" />
             </el-icon>
@@ -26,6 +28,7 @@
             </template>
         
         </el-upload>
+
         <div @click="submitUpload" class="d-grid gap-2 col-6 mx-auto">
             <button class="btn btn-primary" type="button">提交</button>
         </div>
