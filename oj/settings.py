@@ -93,7 +93,7 @@ DATABASES = {
        'ENGINE': 'django.db.backends.mysql',
        'NAME': 'oj', # 你mysql迁入的数据库名称
        'USER': 'root',   # mysql 服务器的用户名
-       'PASSWORD': 'mysql_yeah',
+       'PASSWORD': 'XXXXXXXXX(your musql's password)',
        'HOST': '106.15.183.53',
        'PORT': '3306',
     }
